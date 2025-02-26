@@ -124,7 +124,7 @@ const Features = () => {
                           strokeLinecap="round"
                           strokeLinejoin="round"
                           strokeWidth={2}
-                          d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"
+                          d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"
                         />
                       </svg>
                     </span>
@@ -203,186 +203,23 @@ const Features = () => {
           </div>
         </div>
 
-        {/* Feature Details Section */}
-        <div className="mt-16">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-2xl font-extrabold text-gray-900">
-              Technical Capabilities
+        {/* CTA Section */}
+        <div className="mt-16 bg-blue-700 rounded-lg overflow-hidden">
+          <div className="max-w-2xl mx-auto text-center py-16 px-4 sm:py-20 sm:px-6 lg:px-8">
+            <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
+              <span className="block">Ready to experience ORTHOS?</span>
             </h2>
-          </div>
-
-          <div className="mt-8 border-t border-gray-200 pt-8">
-            <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:gap-x-8">
-              <div>
-                <h3 className="text-lg font-medium text-gray-900">
-                  Input Parameters
-                </h3>
-                <p className="mt-2 text-base text-gray-500">
-                  The system analyzes 24 orthodontic parameters across multiple categories:
-                </p>
-                <ul className="mt-4 space-y-2 text-gray-500">
-                  <li className="flex items-start">
-                    <span className="h-5 w-5 text-blue-600 mr-2">
-                      <svg
-                        className="h-5 w-5"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </span>
-                    <span>Photographic Analysis: Nasolabial Angle</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="h-5 w-5 text-blue-600 mr-2">
-                      <svg
-                        className="h-5 w-5"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </span>
-                    <span>Model Analysis: Carey's Analysis, Arch Perimeter, Ashley Howe's Analysis</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="h-5 w-5 text-blue-600 mr-2">
-                      <svg
-                        className="h-5 w-5"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </span>
-                    <span>Hard Tissue Cephalometrics: ANB, Go-Gn to SN, U1-NA, L1-NB, and more</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="h-5 w-5 text-blue-600 mr-2">
-                      <svg
-                        className="h-5 w-5"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </span>
-                    <span>Soft Tissue Cephalometrics: Facial Angle, E-Plane Measurements, Z Angle</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-medium text-gray-900">
-                  Advanced Capabilities
-                </h3>
-                <p className="mt-2 text-base text-gray-500">
-                  The ORTHOS system goes beyond basic predictions with these advanced features:
-                </p>
-                <ul className="mt-4 space-y-2 text-gray-500">
-                  <li className="flex items-start">
-                    <span className="h-5 w-5 text-blue-600 mr-2">
-                      <svg
-                        className="h-5 w-5"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </span>
-                    <span>Model retraining with new data for continuous improvement</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="h-5 w-5 text-blue-600 mr-2">
-                      <svg
-                        className="h-5 w-5"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </span>
-                    <span>Bulk data upload through Excel files for training</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="h-5 w-5 text-blue-600 mr-2">
-                      <svg
-                        className="h-5 w-5"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </span>
-                    <span>Multiple model version management and selection</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="h-5 w-5 text-blue-600 mr-2">
-                      <svg
-                        className="h-5 w-5"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </span>
-                    <span>Detailed prediction explanations with confidence levels</span>
-                  </li>
-                </ul>
-              </div>
+            <p className="mt-4 text-lg leading-6 text-blue-200">
+              Join orthodontists worldwide who are using AI to enhance their clinical decision-making.
+            </p>
+            <div className="mt-8 flex justify-center">
+              <Link
+                to="/register"
+                className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50"
+              >
+                Get Started
+              </Link>
             </div>
-          </div>
-        </div>
-      </div>
-
-      {/* CTA Section */}
-      <div className="bg-blue-700">
-        <div className="max-w-2xl mx-auto text-center py-16 px-4 sm:py-20 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
-            <span className="block">Ready to experience ORTHOS?</span>
-          </h2>
-          <p className="mt-4 text-lg leading-6 text-blue-200">
-            Join orthodontists worldwide who are using AI to enhance their clinical decision-making.
-          </p>
-          <div className="mt-8 flex justify-center">
-            <Link
-              to="/register"
-              className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50"
-            >
-              Get Started
-            </Link>
           </div>
         </div>
       </div>

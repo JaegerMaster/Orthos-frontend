@@ -1,4 +1,5 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
 const Sidebar = ({ isOpen, setIsOpen, isAdmin = false }) => {
@@ -172,3 +173,5 @@ const Sidebar = ({ isOpen, setIsOpen, isAdmin = false }) => {
     </>
   );
 };
+
+export default Sidebar;

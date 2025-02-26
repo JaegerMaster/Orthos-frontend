@@ -23,10 +23,6 @@ import UserProfile from './components/user/UserProfile';
 
 // Admin pages
 import AdminDashboard from './components/dashboard/AdminDashboard';
-import TrainingDataManagement from './components/admin/TrainingDataManagement';
-import ModelManagement from './components/admin/ModelManagement';
-import UserManagement from './components/admin/UserManagement';
-import DataUpload from './components/admin/DataUpload';
 
 // Protected route wrapper
 const ProtectedRoute = ({ children, requireAdmin = false }) => {
@@ -72,17 +68,13 @@ const AppRoutes = () => {
         <Route path="profile" element={<UserProfile />} />
       </Route>
 
-      {/* Admin routes */}
+      {/* Admin routes - Only adding the AdminDashboard initially */}
       <Route path="/admin" element={
         <ProtectedRoute requireAdmin={true}>
           <DashboardLayout isAdmin={true} />
         </ProtectedRoute>
       }>
         <Route index element={<AdminDashboard />} />
-        <Route path="training-data" element={<TrainingDataManagement />} />
-        <Route path="models" element={<ModelManagement />} />
-        <Route path="users" element={<UserManagement />} />
-        <Route path="upload" element={<DataUpload />} />
       </Route>
 
       {/* Catch-all route */}

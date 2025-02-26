@@ -7,7 +7,5 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-  ],
+  plugins: [], // Removed the forms plugin for now
 }

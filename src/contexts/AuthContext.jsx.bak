@@ -1,0 +1,70 @@
+import { createContext, useState, useEffect, useContext } from 'react';
+
+// Create the auth context
+const AuthContext = createContext();
+
+// Custom hook to use the auth context
+export const useAuth = () => useContext(AuthContext);
+
+export const AuthProvider = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Check if user is logged in on component mount
+    const token = localStorage.getItem('token');
+    if (token) {
+      // In a real app, you would validate the token here
+      // For now, just set loading to false
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
+  }, []);
+
+  // Function to log in
+  const login = async (username, password) => {
+    setLoading(true);
+    try {
+      // In a real app, this would make an API request
+      // For now, just simulate a successful login
+      localStorage.setItem('token', 'fake-token');
+      setCurrentUser({
+        username,
+        email: `${username}@example.com`,
+        is_admin: username === 'admin',
+      });
+      setError(null);
+      return { success: true };
+    } catch (err) {
+      console.error('Login failed:', err);
+      setError('Login failed');
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Function to log out
+  const logout = () => {
+    localStorage.removeItem('token');
+    setCurrentUser(null);
+  };
+
+  // Value to provide to consumers of the context
+  const value = {
+    currentUser,
+    isAuthenticated: !!currentUser,
+    isAdmin: currentUser?.is_admin || false,
+    loading,
+    error,
+    login,
+    logout,
+    refresh: () => {}, // This would refetch the current user in a real app
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};
+
+export default AuthContext;

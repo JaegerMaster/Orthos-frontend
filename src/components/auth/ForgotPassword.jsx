@@ -99,3 +99,41 @@ const ForgotPassword = () => {
                       : 'border-gray-300'
                   }`}
                 />
+                {formik.touched.email && formik.errors.email && (
+                  <p className="mt-2 text-sm text-red-600">
+                    {formik.errors.email}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div className="text-sm">
+                <Link
+                  to="/login"
+                  className="font-medium text-blue-600 hover:text-blue-500"
+                >
+                  Back to sign in
+                </Link>
+              </div>
+            </div>
+
+            <div>
+              <button
+                type="submit"
+                disabled={loading}
+                className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${
+                  loading ? 'opacity-70 cursor-not-allowed' : ''
+                }`}
+              >
+                {loading ? 'Sending...' : 'Send reset instructions'}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ForgotPassword;
