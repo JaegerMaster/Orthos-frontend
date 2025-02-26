@@ -73,7 +73,7 @@ export const authService = {
 // Prediction endpoints
 export const predictionService = {
   makePrediction: async (measurements) => {
-    return api.post('/api/predictions/predict', { measurements });
+    return api.post('/api/predictions/', { measurements });
   },
   
   getPredictionHistory: async () => {
