@@ -29,7 +29,7 @@ const AdminDashboard = () => {
       const predictionsResponse = await predictionService.getPredictionHistory();
       
       // Get training data stats
-      const trainingDataResponse = await trainingService.getTrainingData();
+      const trainingDataResponse = await adminService.getTrainingData();
       const pendingResponse = await adminService.getTrainingData(0, 1000, false);
       
       // Get user count

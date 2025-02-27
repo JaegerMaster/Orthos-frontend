@@ -84,7 +84,7 @@ export const predictionService = {
 // Training data endpoints
 export const trainingService = {
   getTrainingData: async (skip = 0, limit = 20, verified = null) => {
-    let url = `/api/training-data/?skip=${skip}&limit=${limit}`;
+    let url = `/api/admin/training-data/?skip=${skip}&limit=${limit}`;
     if (verified !== null) {
       url += `&verified_only=${verified}`;
     }
@@ -92,26 +92,26 @@ export const trainingService = {
   },
   
   addTrainingData: async (data) => {
-    return api.post('/api/training-data/manual', data);
+    return api.post('/api/admin/training-data/manual', data);
   },
 };
 
 // Admin endpoints
 export const adminService = {
   getAllUsers: async () => {
-    return api.get('/api/admin/users');
+    return api.get('/api/users');
   },
   
   createUser: async (userData) => {
-    return api.post('/api/admin/users', userData);
+    return api.post('/api/users', userData);
   },
   
   updateUser: async (userId, userData) => {
-    return api.put(`/api/admin/users/${userId}`, userData);
+    return api.put(`/api/users/${userId}`, userData);
   },
   
   deleteUser: async (userId) => {
-    return api.delete(`/api/admin/users/${userId}`);
+    return api.delete(`/api/users/${userId}`);
   },
   
   getTrainingData: async (skip = 0, limit = 100, verified = null) => {
@@ -146,7 +146,7 @@ export const adminService = {
   },
   
   trainNewModel: async (description) => {
-    return api.post('/api/admin/train-model', { description });
+    return api.post(`/api/admin/train-model?description=${encodeURIComponent(description)}`);
   },
 };
 

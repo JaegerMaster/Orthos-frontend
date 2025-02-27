@@ -1,5 +1,9 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './contexts/AuthContext';
+import TrainingDataManagement from './components/admin/TrainingDataManagement';
+import ModelManagement from './components/admin/ModelManagement';
+import UserManagement from './components/admin/UserManagement';
+import DataUpload from './components/admin/DataUpload';
 
 // Layouts
 import MainLayout from './components/layouts/MainLayout';
@@ -75,6 +79,10 @@ const AppRoutes = () => {
         </ProtectedRoute>
       }>
         <Route index element={<AdminDashboard />} />
+		<Route path="training-data" element={<TrainingDataManagement />} />
+		<Route path="models" element={<ModelManagement />} />
+		<Route path="users" element={<UserManagement />} />
+		<Route path="upload" element={<DataUpload />} />
       </Route>
 
       {/* Catch-all route */}
