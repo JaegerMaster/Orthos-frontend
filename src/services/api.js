@@ -35,7 +35,9 @@ api.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       // Clear token and redirect to login
       localStorage.removeItem('token');
-      window.location.href = '/login';
+      if (!window.location.pathname.includes('/login')) {
+        window.location.href = '/login';
+      }
     }
     return Promise.reject(error);
   }
@@ -48,6 +50,7 @@ export const authService = {
     formData.append('username', username);
     formData.append('password', password);
     
+    // Use the correct token endpoint from the OpenAPI spec
     const response = await axios.post(`${API_URL}/token`, formData, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -73,6 +76,7 @@ export const authService = {
 // Prediction endpoints
 export const predictionService = {
   makePrediction: async (measurements) => {
+    // Corrected according to OpenAPI spec
     return api.post('/api/predictions/', { measurements });
   },
   
@@ -84,7 +88,8 @@ export const predictionService = {
 // Training data endpoints
 export const trainingService = {
   getTrainingData: async (skip = 0, limit = 20, verified = null) => {
-    let url = `/api/admin/training-data/?skip=${skip}&limit=${limit}`;
+    // Fixed path to match the actual endpoint
+    let url = `/api/training-data/?skip=${skip}&limit=${limit}`;
     if (verified !== null) {
       url += `&verified_only=${verified}`;
     }
@@ -92,26 +97,41 @@ export const trainingService = {
   },
   
   addTrainingData: async (data) => {
-    return api.post('/api/admin/training-data/manual', data);
+    return api.post('/api/training-data/manual', data);
   },
 };
 
 // Admin endpoints
 export const adminService = {
   getAllUsers: async () => {
-    return api.get('/api/users');
+    // Updated according to OpenAPI spec
+    return api.get('/api/users/');
   },
   
   createUser: async (userData) => {
-    return api.post('/api/users', userData);
+    return api.post('/api/users/register', userData);
   },
   
   updateUser: async (userId, userData) => {
-    return api.put(`/api/users/${userId}`, userData);
+    // We should set active/admin status separately according to OpenAPI spec
+    if ('is_admin' in userData) {
+      await api.put(`/api/users/${userId}/admin?is_admin=${userData.is_admin}`);
+    }
+    if ('is_active' in userData) {
+      await api.put(`/api/users/${userId}/active?is_active=${userData.is_active}`);
+    }
+    
+    // Remove admin/active status from user data as they're updated separately
+    const userUpdateData = { ...userData };
+    delete userUpdateData.is_admin;
+    delete userUpdateData.is_active;
+    
+    return api.get(`/api/users/${userId}`);
   },
   
   deleteUser: async (userId) => {
-    return api.delete(`/api/users/${userId}`);
+    // Not included in OpenAPI spec - might need to deactivate instead
+    return api.put(`/api/users/${userId}/active?is_active=false`);
   },
   
   getTrainingData: async (skip = 0, limit = 100, verified = null) => {
@@ -123,7 +143,7 @@ export const adminService = {
   },
   
   verifyTrainingData: async (dataId, verified) => {
-    return api.post(`/api/admin/training-data/${dataId}/verify`, { verified });
+    return api.post(`/api/admin/training-data/${dataId}/verify?verified=${verified}`);
   },
   
   uploadExcelData: async (file) => {
@@ -148,6 +168,29 @@ export const adminService = {
   trainNewModel: async (description) => {
     return api.post(`/api/admin/train-model?description=${encodeURIComponent(description)}`);
   },
+  
+  // Add method for adding training data
+  addManualTrainingData: async (inputData, actualOutcome) => {
+    return api.post('/api/admin/training-data/manual', {
+      input_data: inputData,
+      actual_outcome: actualOutcome
+    });
+  }
+};
+
+// Add a separate user service for profile updates
+export const userService = {
+  updateProfile: async (userData) => {
+    // Use the PUT method as specified in the OpenAPI spec
+    return api.put('/api/users/me', userData);
+  },
+  
+  changePassword: async (currentPassword, newPassword) => {
+    return api.put('/api/users/me', {
+      current_password: currentPassword,
+      new_password: newPassword
+    });
+  }
 };
 
 export default api;

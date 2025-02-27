@@ -3,13 +3,14 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../contexts/AuthContext';
-import api from '../../services/api';
+import { userService } from '../../services/api'; // Import the userService
 
 const UserProfile = () => {
   const { currentUser, refresh } = useAuth();
   const [loading, setLoading] = useState(false);
   const [changePassword, setChangePassword] = useState(false);
 
+  // Fixed validation schema to avoid cyclic dependency
   const formik = useFormik({
     initialValues: {
       username: currentUser?.username || '',
@@ -21,38 +22,37 @@ const UserProfile = () => {
     validationSchema: Yup.object({
       username: Yup.string().required('Username is required'),
       email: Yup.string().email('Invalid email address').required('Email is required'),
-      currentPassword: Yup.string().when('newPassword', {
-        is: value => value && value.length > 0,
-        then: Yup.string().required('Current password is required to set a new password'),
-      }),
+      // Fix cyclic dependency by using .when() only once
+      currentPassword: Yup.string()
+        .test('password-change', 'Current password is required to set a new password', function(value) {
+          return !this.parent.newPassword || !!value;
+        }),
       newPassword: Yup.string()
         .min(8, 'Password must be at least 8 characters')
-        .when('currentPassword', {
-          is: value => value && value.length > 0,
-          then: Yup.string().required('New password is required'),
+        .test('password-change', 'New password is required when current password is provided', function(value) {
+          return !this.parent.currentPassword || !!value;
         }),
       confirmPassword: Yup.string()
-        .oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
-        .when('newPassword', {
-          is: value => value && value.length > 0,
-          then: Yup.string().required('Confirm password is required'),
-        }),
+        .test('passwords-match', 'Passwords must match', function(value) {
+          return !this.parent.newPassword || value === this.parent.newPassword;
+        })
     }),
     onSubmit: async (values) => {
       setLoading(true);
       try {
+        // Create the update data object according to the OpenAPI spec
         const userData = {
-          username: values.username,
           email: values.email,
         };
 
-        // Only include password fields if the user is changing their password
+        // Only include password if the user is changing their password
         if (changePassword && values.currentPassword && values.newPassword) {
+          userData.password = values.newPassword;
           userData.current_password = values.currentPassword;
-          userData.new_password = values.newPassword;
         }
 
-        await api.put('/api/users/me', userData);
+        // Use the userService instead of direct API call
+        await userService.updateProfile(userData);
         
         toast.success('Profile updated successfully');
         
@@ -66,7 +66,18 @@ const UserProfile = () => {
         refresh();
       } catch (error) {
         console.error('Failed to update profile:', error);
-        toast.error(error.response?.data?.detail || 'Failed to update profile');
+        
+        if (error.response) {
+          if (error.response.status === 401) {
+            toast.error('Your session has expired. Please log in again.');
+          } else {
+            toast.error(error.response.data?.detail || 'Failed to update profile');
+          }
+        } else if (error.request) {
+          toast.error('Server not responding. Please try again later.');
+        } else {
+          toast.error('An error occurred: ' + error.message);
+        }
       } finally {
         setLoading(false);
       }
@@ -93,15 +104,10 @@ const UserProfile = () => {
                     name="username"
                     id="username"
                     value={formik.values.username}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    className={`shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md ${
-                      formik.touched.username && formik.errors.username ? 'border-red-300' : ''
-                    }`}
+                    disabled={true} // Username cannot be changed based on API spec
+                    className="bg-gray-100 shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
                   />
-                  {formik.touched.username && formik.errors.username && (
-                    <p className="mt-1 text-sm text-red-600">{formik.errors.username}</p>
-                  )}
+                  <p className="mt-1 text-xs text-gray-500">Username cannot be changed</p>
                 </div>
               </div>
 
